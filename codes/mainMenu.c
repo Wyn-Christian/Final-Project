@@ -43,16 +43,15 @@ void displayMainMenu(Order (*arrayOrders)[],
 
   case '2':
     // if 2, then call the `buyOrders` function from `codes/buyOrders.c` file
-    // buyOrders(arrayOrders,
-    //           arrayReceipts, currentNumOrders,
-    //           totalOrders);
+    buyOrders(arrayOrders, arrayReceipts,
+              *currentNumOrders, *totalOrders);
 
     displayMainMenu(arrayOrders,
                     arrayReceipts, currentNumOrders,
                     totalOrders);
   case '3':
     // if 3, then call the `displaySalesReceipts` function from `codes/displayReceipts.c` file
-    // displaySalesReceipts(arrayReceipts, *totalOrders);
+    displaySalesReceipt(arrayReceipts, *totalOrders);
 
     displayMainMenu(arrayOrders,
                     arrayReceipts, currentNumOrders,

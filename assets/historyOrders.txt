@@ -1,2 +1,2 @@
-Code          Name           Price Amout   
+Code       Name                Quantity   Price      Amout        
 

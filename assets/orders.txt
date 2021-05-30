@@ -5,3 +5,5 @@ Code            Name         Price
 A1         Chicken           50             
 A2         SpicyChicken      60             
 B1         Rice              20             
+B2         BrownRice         30        
+B3         ChineseRice       34        

@@ -1,0 +1,7 @@
+Name              Quantity   Amount
+
+Chicken           0          0
+Spicy Chicken     0          0
+Rice              0          0
+Brown Rice        0          0
+Chinese Rice      0          0

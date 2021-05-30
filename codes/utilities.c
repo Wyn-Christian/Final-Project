@@ -90,12 +90,67 @@ void readAllOrders(int *total, Order (*orders)[])
   return;
 } // readAllOrders Function
 
+void getFirstWord(char *dest, char *source, int index)
+{
+  char result[100];
+  for (int i = 0; i < index; i++)
+  {
+    result[i] = source[i];
+  }
+  result[index] = '\0';
+  strcpy(dest, result);
+}
+void getSecondWord(char *dest, char *source, int index, int total)
+{
+  char result[100];
+  result[0] = ' ';
+  int j = 1;
+  for (int i = index; i < total; i++, j++)
+  {
+    result[j] = source[i];
+  }
+  result[j] = '\0';
+  strcpy(dest, result);
+}
+
+void insertSpace(char *dest, int index, int total)
+{
+  char firstWord[100], secondWord[100];
+  getFirstWord(firstWord, dest, index);
+  getSecondWord(secondWord, dest, index, total);
+  strcat(firstWord, secondWord);
+  strcpy(dest, firstWord);
+}
+
+void arrangeName(char *name)
+{
+  int totalLetters = strlen(name);
+  int currentLetter;
+
+  for (int i = 0; i < totalLetters; i++)
+  {
+    currentLetter = (int)name[i];
+    if (i == 0 && currentLetter > 96 && currentLetter < 123)
+      name[i] = currentLetter - 32;
+
+    if (i > 0 && currentLetter > 64 && currentLetter < 91)
+    {
+      insertSpace(name, i, totalLetters);
+      i++;
+      totalLetters++;
+    }
+  }
+}
+
 // This function initialize the values of the `arrayCategories` array
 //   and overwrite/create the `historyOrdersFile` with headers only
 void initialize(Order (*arrayOrders)[],
                 Receipt (*arrayReceipts)[], int *total,
                 int *totalOrders)
 {
+  FILE *file1 = fopen(orderReceiptsFile, "w");
+  char tempName[100];
+  fprintf(file1, "%-17s %-10s %s\n\n", "Name", "Quantity", "Amount");
   // A loop that gives a first value to each array indexes
   for (int i = 0; i < *total; i++)
   {
@@ -104,11 +159,17 @@ void initialize(Order (*arrayOrders)[],
     (*arrayReceipts)[i].quantity = 0;
     (*arrayReceipts)[i].amount = 0;
     *totalOrders += 1;
+
+    strcpy(tempName, (*arrayReceipts)[i].name);
+    arrangeName(tempName);
+    fprintf(file1, "%-17s %-10d %.f\n", tempName, (*arrayReceipts)[i].quantity, (*arrayReceipts)[i].amount);
   }
+  fclose(file1);
 
   // overwrite the `historyOrdersFile` with headers only
   FILE *file = fopen(historyOrdersFile, "w");
-  fprintf(file, "%-13s %-14s %-14s\n\n", "Code", "Name", "Price Amout");
+  fprintf(file, "%-10s %-19s %-10s %-9s %-14s\n\n",
+          "Code", "Name", "Quantity", "Price", " Amout");
   fclose(file);
 } // initialize Function
 

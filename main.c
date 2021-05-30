@@ -11,7 +11,7 @@
 // This is the file path of the .txt files
 #define ordersFile "assets/orders.txt"
 #define historyOrdersFile "assets/historyOrders.txt"
-#define orderReceiptsFile "assets/salesReport.txt"
+#define orderReceiptsFile "assets/orderReceipt.txt"
 
 // the database root file
 // #define databaseRootFile "database/"
@@ -20,13 +20,13 @@
 #define MAXTRANSACTION (16) // For non reservation per transaction
 
 // This is our external files
-#include "codes/structs.h"      // Just a collection of structs
-#include "codes/designs.c"      // Some UI designs
-#include "codes/utilities.c"    // some reusable functios
-#include "codes/manageOrders.c" // 1.] Manage orders
-// #include "codes/buyTicket.c"          // 2.] Buy Orders
-// #include "codes/displayReport.c"      // 3.] Display Receipt
-#include "codes/mainMenu.c" // The MAIN menu
+#include "codes/structs.h"        // Just a collection of structs
+#include "codes/designs.c"        // Some UI designs
+#include "codes/utilities.c"      // some reusable functios
+#include "codes/manageOrders.c"   // 1.] Manage orders
+#include "codes/buyOrders.c"      // 2.] Buy Orders
+#include "codes/displayReceipt.c" // 3.] Display Receipt
+#include "codes/mainMenu.c"       // The MAIN menu
 
 int main(void)
 {

@@ -15,15 +15,8 @@
   If you have a pointer to a struct, You have to use the arrow operator (->) to access its fields. 
  */
 
-typedef struct order Order;       // For Orders categories
-typedef struct order Information; // For database of current program
-typedef struct receipt Receipt;   // For Sales Receipt
-
-// For tracking Transactions
-typedef struct currentData CurrentData;
-typedef struct Database Database;
-typedef struct Database CurrentOutput;
-typedef struct Database Transactions;
+typedef struct order Order;     // For Orders categories
+typedef struct receipt Receipt; // For Sales Receipt
 
 struct order
 {
@@ -34,36 +27,7 @@ struct order
 
 struct receipt
 {
-  char code[5];
-  char name[100];
+  struct order;
   unsigned int quantity;
   float amount;
-};
-
-struct info
-{
-  int primaryKey;
-  char country[50];
-  int price;
-  float tax;
-};
-
-struct currentUser
-{
-  int destination;
-  int age;
-  float payment;
-};
-
-struct currentData
-{
-  char country[100];
-  int tax;
-  int total;
-};
-
-struct Database
-{
-  int age;
-  float price;
 };

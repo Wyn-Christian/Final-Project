@@ -10,6 +10,18 @@
     * displayOrder()
  */
 
+int checkCode(Order (*orders)[], int total, char *code)
+{
+  int result = 0;
+  for (int i = 0; i < total; i++)
+  {
+    if (!strcmp((*orders)[i].code, code))
+      return result;
+    result++;
+  }
+  return -1;
+}
+
 // this function adds new order in the `orderFile`
 void addOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
 {
@@ -17,15 +29,15 @@ void addOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
 
   //  checks if the buffer has some value
   if (hasBuffer)
+  {
     FLUSH;
+    printf("\nThe code you enter already exist...\nPlease try again...\n");
+  }
 
   int result = 1;
   char tempCode[50];
   char tempOrder[50];
   float tempPrice;
-
-  // Prompt the user the order code
-  printf("\n\nOrder Code: %02d", (*total + 1));
 
   // Prompt the user a new order
   do
@@ -40,6 +52,11 @@ void addOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
     printf("\nTESTING result = %d\n", result);
   } while (!result);
 
+  if (checkCode(arrayOrders, *total, tempCode) != -1)
+  {
+    return addOrder(arrayOrders, total, true);
+  }
+
   result = 1;
 
   do
@@ -48,7 +65,7 @@ void addOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
     {
       FLUSH;
     }
-    printf("\nEnter new order name (camelCase): ");
+    printf("\nEnter new order name (CamelCase): ");
     result = scanf("%s", tempOrder);
     printf("\nTESTING result = %d\n", result);
 
@@ -105,18 +122,6 @@ void printHeaders(FILE *file)
   fprintf(file, "\n\n");
 
   return;
-}
-
-int checkCode(Order (*orders)[], int total, char *code)
-{
-  int result = 0;
-  for (int i = 0; i < total; i++)
-  {
-    if (!strcmp((*orders)[i].code, code))
-      return result;
-    result++;
-  }
-  return -1;
 }
 
 // It updates the existing order's price
@@ -275,6 +280,7 @@ void deleteOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
 void displayOrder(Order (*arrayOrders)[], int total)
 {
   system("cls");
+  char name[100];
   if (!total)
     printf("\nSorry, there's no available flight right now...");
   else
@@ -287,7 +293,9 @@ void displayOrder(Order (*arrayOrders)[], int total)
     // Display all of the current data
     for (int i = 0; i < total; i++)
     {
-      printf("\n\t\t%-10s %-17s %.f\n", (*arrayOrders)[i].code, (*arrayOrders)[i].name, (*arrayOrders)[i].price);
+      strcpy(name, (*arrayOrders)[i].name);
+      arrangeName(name);
+      printf("\n\t\t%-10s %-17s %.f\n", (*arrayOrders)[i].code, name, (*arrayOrders)[i].price);
     }
     printEquals();
   }
