@@ -1,16 +1,16 @@
 /* 
-  This is where manage destination functions
+  This is where manage order functions
 
   The following functions are used for 
-  managing destinations:
-  * manageDestination()
+  managing orders:
+  * manageOrders()
     * addOrder()
     * editOrder()
     * deleteOrder()
     * displayOrder()
  */
 
-// this function adds destination in the `destinationFile`
+// this function adds new order in the `orderFile`
 void addOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
 {
   system("cls");
@@ -24,7 +24,7 @@ void addOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
   char tempOrder[50];
   float tempPrice;
 
-  // Prompt the user the dest code
+  // Prompt the user the order code
   printf("\n\nOrder Code: %02d", (*total + 1));
 
   // Prompt the user a new order
@@ -88,11 +88,11 @@ void addOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
     *total += 1;
   }
 
-  // Prompt the user for another new record
-  if (promptUser("\nAnother record(y/n)?"))
+  // Prompt the user for another new order
+  if (promptUser("\nAnother order(y/n)?"))
     return addOrder(arrayOrders, total, false);
   else
-    // Return to Manage Destination menu
+    // Return to Manage Order menu
     return;
 
 } // addOrder Function
@@ -119,7 +119,7 @@ int checkCode(Order (*orders)[], int total, char *code)
   return -1;
 }
 
-// It updates the existing category's price
+// It updates the existing order's price
 void editOrder(Order (*arrayOrders)[], int total, bool hasBuffer)
 {
   system("cls");
@@ -153,7 +153,7 @@ void editOrder(Order (*arrayOrders)[], int total, bool hasBuffer)
   printf("\nCurrent order: %s", (*arrayOrders)[index].name);
 
   float newPrice;
-  // Prompts the user a new price for the selected destination
+  // Prompts the user a new price for the selected order
   do
   {
     if (!result)
@@ -167,7 +167,7 @@ void editOrder(Order (*arrayOrders)[], int total, bool hasBuffer)
   } while (!result);
 
   // Ask the user to save the changes
-  // If yes, then update the current category's price
+  // If yes, then update the current order's price
   if (promptUser("\nSAVE changes[y/n]?"))
   {
     // store the new price
@@ -189,12 +189,12 @@ void editOrder(Order (*arrayOrders)[], int total, bool hasBuffer)
   if (promptUser("\nEdit another record[y/n]?"))
     return editOrder(arrayOrders, total, false);
   else
-    // Return to Manage Destination menu
+    // Return to Manage Order menu
     return;
 
 } // editOrder Function
 
-// It removes the existing category and update the arrays
+// It removes the existing order and update the arrays
 void deleteOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
 {
   system("cls");
@@ -224,18 +224,18 @@ void deleteOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
     deleteOrder(arrayOrders, total, true);
   }
 
-  // Displays the selected category's name and price
+  // Displays the selected order's name and price
   printf("\nOrder name: %s", (*arrayOrders)[index].name);
   printf("\nOrder price: %.f", (*arrayOrders)[index].price);
 
-  // Ask the user to proceed to delete the selected category
-  // if yes, then delete the selected category
+  // Ask the user to proceed to delete the selected order
+  // if yes, then delete the selected order
   if (promptUser("\nAre you sure you want to delete this record[y/n]?"))
   {
     int totalNum = *total - 1;
     puts("\nDeleting this record...");
 
-    // Reprint the `destinationsFile` headings
+    // Reprint the `ordersFile` headings
     FILE *file = fopen(ordersFile, "w+");
     printHeaders(file);
 
@@ -253,7 +253,7 @@ void deleteOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
         (*arrayOrders)[i].price = (*arrayOrders)[next].price;
       }
 
-      // print the data in the `destinationsFile`
+      // print the data in the `ordersFile`
       fprintf(file, "%-10s %-17s %-15.f\n", (*arrayOrders)[i].code, (*arrayOrders)[i].name, (*arrayOrders)[i].price);
     }
 
@@ -262,16 +262,16 @@ void deleteOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
     fclose(file);
   }
 
-  // Ask the user to edit another record
-  if (promptUser("\nDelete another record[y/n]?"))
+  // Ask the user to edit another order
+  if (promptUser("\nDelete another order[y/n]?"))
     return deleteOrder(arrayOrders, total, false);
   else
-    // Return to Manage Destination menu
+    // Return to Manage Order menu
     return;
 
 } // editOrder Function
 
-// Displays the current data in the `reportFile`
+// Displays the current data in the `ordersFile`
 void displayOrder(Order (*arrayOrders)[], int total)
 {
   system("cls");
@@ -292,15 +292,15 @@ void displayOrder(Order (*arrayOrders)[], int total)
     printEquals();
   }
 
-  // Return to Manage Destination menu
+  // Return to Manage Order menu
   puts("\n\t\tPress any key to RETURN");
   char some = getch();
   return;
 } // displayOrder Function
 
 // The main function in this file
-// It manage the information of `arrayCategories`
-void manageOrders(Order (*arrayCategories)[], int *total)
+// It manage the information of `arrayOrders`
+void manageOrders(Order (*arrayOrders)[], int *total)
 {
   system("cls");
   FLUSH;
@@ -314,7 +314,7 @@ void manageOrders(Order (*arrayCategories)[], int *total)
 
   // Display the menu
   printDash();
-  printf("\n\t\tMANAGE DESTINATION\n\n");
+  printf("\n\t\tMANAGE ORDER\n\n");
   for (int i = 0; i < 5; i++)
     printf("\t\t%d.] %s\n\n", (i + 1), menu[i]);
   printDash();
@@ -330,30 +330,30 @@ void manageOrders(Order (*arrayCategories)[], int *total)
   {
   case '1':
     // if '1', then invoke `addOrder` Function
-    addOrder(arrayCategories, total, false);
-    manageOrders(arrayCategories, total);
+    addOrder(arrayOrders, total, false);
+    manageOrders(arrayOrders, total);
     break;
   case '2':
     // if '2', then invoke `editOrder` Function
-    editOrder(arrayCategories, *total, false);
-    manageOrders(arrayCategories, total);
+    editOrder(arrayOrders, *total, false);
+    manageOrders(arrayOrders, total);
     break;
   case '3':
     // if '3', then invoke `deleteOrder` Function
-    deleteOrder(arrayCategories, total, false);
-    manageOrders(arrayCategories, total);
+    deleteOrder(arrayOrders, total, false);
+    manageOrders(arrayOrders, total);
     break;
   case '4':
     // if '4', then invoke `displayOrder` Function
-    displayOrder(arrayCategories, *total);
-    manageOrders(arrayCategories, total);
+    displayOrder(arrayOrders, *total);
+    manageOrders(arrayOrders, total);
     break;
   case '5':
     // if '5', then return to MAIN
     break;
   default:
     puts("Error, invalid input. try again");
-    manageOrders(arrayCategories, total);
+    manageOrders(arrayOrders, total);
   }
 
   return;
