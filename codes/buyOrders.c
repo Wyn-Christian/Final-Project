@@ -1,5 +1,3 @@
-
-
 void displayOrders(Order (*arrayOrders)[], int numOrder)
 {
   printf("\t\tSIMPLE RESTAURANT FKU\n\n");
@@ -105,7 +103,60 @@ void updateHistory(QueueOrder *currentOrder)
   fclose(file);
 }
 
-void storeAndDequeueAllOrder(Queue *q, Receipt (*arrayReceipt)[], int totalOrders)
+int getIndex(char *code, Receipt (*arrayReceipt)[], int totalOrders)
+{
+  int result = 0;
+  for (int i = 0; i < totalOrders; i++)
+  {
+    if (!strcmp(code, (*arrayReceipt)[i].code))
+      return result;
+
+    result += 1;
+  }
+  result = -1;
+}
+
+void updateSalesReceipt(QueueOrder *currentOrder,
+                        Receipt (*arrayReceipt)[], int *totalOrders)
+{
+  int index = getIndex(currentOrder->code, arrayReceipt, *totalOrders);
+  if (index != -1)
+  {
+    (*arrayReceipt)[index]
+        .quantity += currentOrder->quantity;
+    (*arrayReceipt)[index].amount += currentOrder->amount;
+  }
+  else
+  {
+    int i = (*totalOrders);
+    strcpy((*arrayReceipt)[i].code, currentOrder->code);
+    strcpy((*arrayReceipt)[i].name, currentOrder->name);
+    (*arrayReceipt)[i]
+        .price = currentOrder->price;
+    (*arrayReceipt)[i]
+        .quantity = currentOrder->quantity;
+    (*arrayReceipt)[i].amount = currentOrder->amount;
+    (*totalOrders) += 1;
+  }
+  return;
+}
+
+void updateSalesReceiptFile(Receipt (*arrayReceipt)[], int *totalOrders)
+{
+  FILE *file = fopen(orderReceiptsFile, "w");
+  char tempName[100];
+  fprintf(file, "%-17s %-10s %s\n\n", "Name", "Quantity", "Amount");
+  // A loop that gives a first value to each array indexes
+  for (int i = 0; i < *totalOrders; i++)
+  {
+    strcpy(tempName, (*arrayReceipt)[i].name);
+    arrangeName(tempName);
+    fprintf(file, "%-17s %-10d %.f\n", tempName, (*arrayReceipt)[i].quantity, (*arrayReceipt)[i].amount);
+  }
+  fclose(file);
+}
+
+void storeAndDequeueAllOrder(Queue *q, Receipt (*arrayReceipt)[], int *totalOrders)
 {
   if (q->front == NULL)
     return;
@@ -115,10 +166,13 @@ void storeAndDequeueAllOrder(Queue *q, Receipt (*arrayReceipt)[], int totalOrder
   {
     temp = q->front;
     updateHistory(temp);
+    updateSalesReceipt(temp, arrayReceipt, totalOrders);
+    updateSalesReceiptFile(arrayReceipt, totalOrders);
+    q = DequeueOrder(q);
   }
 }
 
-void buyOrders(Order (*arrayOrders)[], Receipt (*arrayReceipt)[], int numOrder, int totalOrders)
+void buyOrders(Order (*arrayOrders)[], Receipt (*arrayReceipt)[], int numOrder, int *totalOrders)
 {
   char answer[10];
   int result = 1, index = 1, quantity = 0;
@@ -138,6 +192,7 @@ void buyOrders(Order (*arrayOrders)[], Receipt (*arrayReceipt)[], int numOrder, 
 
   } while (promptUser("\nAnother Order[Y/N]? "));
   /* Store and Dequeue the orders */
+  storeAndDequeueAllOrder(queue, arrayReceipt, totalOrders);
 
   puts("\n\t\tPress any key to RETURN");
   char some = getch();
