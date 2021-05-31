@@ -15,9 +15,10 @@
   If you have a pointer to a struct, You have to use the arrow operator (->) to access its fields. 
  */
 
-typedef struct order Order;      // For Orders categories
-typedef struct receipt Receipt;  // For Sales Receipt
-typedef struct queueOrder Queue; // For Tracking Orders
+typedef struct order Order;           // For Orders categories
+typedef struct receipt Receipt;       // For Sales Receipt
+typedef struct queueOrder QueueOrder; // For Tracking Orders
+typedef struct queue Queue;           // For Tracking Orders in a Queue way
 
 struct order
 {
@@ -37,4 +38,10 @@ struct queueOrder
 {
   struct receipt;
   struct queueOrder *next;
+};
+
+struct queue
+{
+  struct queueOrder *front;
+  struct queueOrder *rear;
 };

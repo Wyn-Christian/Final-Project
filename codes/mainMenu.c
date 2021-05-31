@@ -12,7 +12,7 @@ void displayMainMenu(Order (*arrayOrders)[],
                      int *currentNumOrders, int *totalOrders)
 {
   // Clear screen
-  system("cls");
+  // system("cls");
 
   // Display the MAIN menu
   printf("\n\t\tSIMPLE RESTAURANT FKU\n");

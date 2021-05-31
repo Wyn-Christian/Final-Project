@@ -169,7 +169,7 @@ void initialize(Order (*arrayOrders)[],
   // overwrite the `historyOrdersFile` with headers only
   FILE *file = fopen(historyOrdersFile, "w");
   fprintf(file, "%-10s %-19s %-10s %-9s %-14s\n\n",
-          "Code", "Name", "Quantity", "Price", " Amout");
+          "Code", "Name", "Quantity", "Price", " Amount");
   fclose(file);
 } // initialize Function
 

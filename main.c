@@ -22,6 +22,7 @@
 // This is our external files
 #include "codes/structs.h"        // Just a collection of structs
 #include "codes/designs.c"        // Some UI designs
+#include "codes/queue.c"          // Queue Functions
 #include "codes/utilities.c"      // some reusable functios
 #include "codes/manageOrders.c"   // 1.] Manage orders
 #include "codes/buyOrders.c"      // 2.] Buy Orders
