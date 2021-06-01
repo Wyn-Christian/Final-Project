@@ -14,7 +14,7 @@
 #define orderReceiptsFile "assets/orderReceipt.txt"
 
 // the database root file
-// #define databaseRootFile "database/"
+#define receiptsFile "receipts/"
 
 #define TOTAL (100)         // size of an arrays
 #define MAXTRANSACTION (16) // For non reservation per transaction

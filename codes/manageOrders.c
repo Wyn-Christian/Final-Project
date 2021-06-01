@@ -49,7 +49,6 @@ void addOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
     printf("\nEnter new order code (char)(num): ");
     result = scanf("%s", tempCode);
 
-    printf("\nTESTING result = %d\n", result);
   } while (!result);
 
   if (checkCode(arrayOrders, *total, tempCode) != -1)
@@ -67,7 +66,6 @@ void addOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
     }
     printf("\nEnter new order name (CamelCase): ");
     result = scanf("%s", tempOrder);
-    printf("\nTESTING result = %d\n", result);
 
   } while (!result);
 
@@ -82,7 +80,6 @@ void addOrder(Order (*arrayOrders)[], int *total, bool hasBuffer)
     printf("\nEnter new order price: ");
     result = scanf("%f", &tempPrice);
 
-    printf("\nTESTING result = %d\n", result);
   } while (!result);
 
   printf("\n%s %s %.f", tempCode, tempOrder, tempPrice);

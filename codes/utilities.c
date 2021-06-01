@@ -156,6 +156,7 @@ void initialize(Order (*arrayOrders)[],
   {
     strcpy((*arrayReceipts)[i].code, (*arrayOrders)[i].code);
     strcpy((*arrayReceipts)[i].name, (*arrayOrders)[i].name);
+    (*arrayReceipts)[i].price = (*arrayOrders)[i].price;
     (*arrayReceipts)[i].quantity = 0;
     (*arrayReceipts)[i].amount = 0;
     *totalOrders += 1;

@@ -51,7 +51,7 @@ void displayMainMenu(Order (*arrayOrders)[],
                     totalOrders);
   case '3':
     // if 3, then call the `displaySalesReceipts` function from `codes/displayReceipts.c` file
-    displaySalesReceipt(arrayReceipts, *totalOrders);
+    salesRecieptsMenu(arrayReceipts, *totalOrders);
 
     displayMainMenu(arrayOrders,
                     arrayReceipts, currentNumOrders,

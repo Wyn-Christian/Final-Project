@@ -145,8 +145,6 @@ void updateSalesReceipt(QueueOrder *currentOrder,
     strcpy((*current)[i].code, currentOrder->code);
     strcpy((*current)[i].name, currentOrder->name);
     (*current)[i]
-        .price = currentOrder->price;
-    (*current)[i]
         .quantity = currentOrder->quantity;
     (*current)[i].amount = currentOrder->amount;
     (*totalOrders) += 1;
@@ -200,15 +198,16 @@ void createReceiptFile(Receipt (*currentReceipt)[], int *total, char *code)
   sprintf(code, "%03d", randomNum);
   file = fopen(filename, "w+");
 
-  fprintf(file, "%-18s %-12s %-10s\n\n",
-          "Name", "Quantity", "Amount");
+  fprintf(file, "%-18s %-10s %-12s %-10s\n\n",
+          "Name", "Price", "Quantity", "Amount");
 
   for (int i = 0; i < *total; i++)
   {
     if ((*currentReceipt)[i].quantity)
     {
-
-      fprintf(file, "%-18s %-12d %-10.f\n", (*currentReceipt)[i].name, (*currentReceipt)[i].quantity, (*currentReceipt)[i].amount);
+      fprintf(file, "%-18s %-10.f %-12d %-10.f\n\n",
+              (*currentReceipt)[i].name, (*currentReceipt)[i].price,
+              (*currentReceipt)[i].quantity, (*currentReceipt)[i].amount);
     }
   }
 
