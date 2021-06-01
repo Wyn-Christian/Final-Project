@@ -117,7 +117,9 @@ int getIndex(char *code, Receipt (*arrayReceipt)[], int totalOrders)
 }
 
 void updateSalesReceipt(QueueOrder *currentOrder,
-                        Receipt (*arrayReceipt)[], int *totalOrders)
+                        Receipt (*current)[],
+                        Receipt (*arrayReceipt)[],
+                        int *totalOrders)
 {
   int index = getIndex(currentOrder->code, arrayReceipt, *totalOrders);
   if (index != -1)
@@ -125,6 +127,9 @@ void updateSalesReceipt(QueueOrder *currentOrder,
     (*arrayReceipt)[index]
         .quantity += currentOrder->quantity;
     (*arrayReceipt)[index].amount += currentOrder->amount;
+    (*current)[index]
+        .quantity += currentOrder->quantity;
+    (*current)[index].amount += currentOrder->amount;
   }
   else
   {
@@ -136,6 +141,14 @@ void updateSalesReceipt(QueueOrder *currentOrder,
     (*arrayReceipt)[i]
         .quantity = currentOrder->quantity;
     (*arrayReceipt)[i].amount = currentOrder->amount;
+
+    strcpy((*current)[i].code, currentOrder->code);
+    strcpy((*current)[i].name, currentOrder->name);
+    (*current)[i]
+        .price = currentOrder->price;
+    (*current)[i]
+        .quantity = currentOrder->quantity;
+    (*current)[i].amount = currentOrder->amount;
     (*totalOrders) += 1;
   }
   return;
@@ -156,20 +169,75 @@ void updateSalesReceiptFile(Receipt (*arrayReceipt)[], int *totalOrders)
   fclose(file);
 }
 
+void initializeCurrentReceipt(Receipt (*destination)[],
+                              Receipt (*source)[], int *totalOrders)
+{
+  for (int i = 0; i < *totalOrders; i++)
+  {
+    strcpy((*destination)[i].code, (*source)[i].code);
+    strcpy((*destination)[i].name, (*source)[i].name);
+    (*destination)[i].price = (*source)[i].price;
+
+    (*destination)[i].amount = 0;
+    (*destination)[i].quantity = 0;
+  }
+}
+int generateRandom(void)
+{
+  srand(time(NULL));
+  int ran = (rand() % 999) + 1;
+  return ran;
+} // generateRandom Function
+
+void createReceiptFile(Receipt (*currentReceipt)[], int *total, char *code)
+{
+  FILE *file;
+  srand(time(NULL));
+  int randomNum = generateRandom();
+
+  char filename[50];
+  sprintf(filename, "receipts/%03d.txt", randomNum);
+  sprintf(code, "%03d", randomNum);
+  file = fopen(filename, "w+");
+
+  fprintf(file, "%-18s %-12s %-10s\n\n",
+          "Name", "Quantity", "Amount");
+
+  for (int i = 0; i < *total; i++)
+  {
+    if ((*currentReceipt)[i].quantity)
+    {
+
+      fprintf(file, "%-18s %-12d %-10.f\n", (*currentReceipt)[i].name, (*currentReceipt)[i].quantity, (*currentReceipt)[i].amount);
+    }
+  }
+
+  fclose(file);
+  return;
+}
+
 void storeAndDequeueAllOrder(Queue *q, Receipt (*arrayReceipt)[], int *totalOrders)
 {
   if (q->front == NULL)
     return;
 
   QueueOrder *temp;
+  Receipt currentReceipt[TOTAL];
+  initializeCurrentReceipt(&currentReceipt, arrayReceipt, totalOrders);
+
   while (q->front != NULL)
   {
     temp = q->front;
     updateHistory(temp);
-    updateSalesReceipt(temp, arrayReceipt, totalOrders);
+    updateSalesReceipt(temp, &currentReceipt,
+                       arrayReceipt, totalOrders);
     updateSalesReceiptFile(arrayReceipt, totalOrders);
     q = DequeueOrder(q);
   }
+  char code[5];
+  createReceiptFile(&currentReceipt, totalOrders, code);
+  printf("Here is your fkin code: %s", code);
+  return;
 }
 
 void buyOrders(Order (*arrayOrders)[], Receipt (*arrayReceipt)[], int numOrder, int *totalOrders)

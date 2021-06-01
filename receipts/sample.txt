@@ -1,0 +1,7 @@
+Name          Quantity          Amount
+
+(OrderName)   (Integer)          (Float)
+(OrderName)   (Integer)          (Float)
+(OrderName)   (Integer)          (Float)
+...
+...
