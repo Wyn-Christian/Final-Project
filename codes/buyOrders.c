@@ -1,6 +1,6 @@
 void displayOrders(Order (*arrayOrders)[], int numOrder)
 {
-  printf("\t\tSIMPLE RESTAURANT FKU\n\n");
+  printf("\t\tSIMPLE RESTAURANT SYSTEM\n\n");
   printf("\t%-10s %-20s %s\n\n", "Code", "Name", "Price");
   Order current;
   char name[100];
@@ -236,7 +236,7 @@ void storeAndDequeueAllOrder(Queue *q, Receipt (*arrayReceipt)[], int *totalOrde
   }
   char code[5];
   createReceiptFile(&currentReceipt, totalOrders, code);
-  printf("Here is your fkin code: %s", code);
+  printf("Here is your receipt code: %s", code);
   return;
 }
 
@@ -252,7 +252,7 @@ void buyOrders(Order (*arrayOrders)[], Receipt (*arrayReceipt)[], int numOrder, 
 
     float amount = displayResult(arrayOrders, index, quantity);
 
-    if (promptUser("\nProceed to buy[Y/N]? "))
+    if (promptUser("\n\nProceed to buy[Y/N]? "))
     {
       /* Enqueue the Order */
       queue = EnqueueOrder(queue, (*arrayOrders)[index], quantity, amount);

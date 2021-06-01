@@ -15,7 +15,7 @@ void displayMainMenu(Order (*arrayOrders)[],
   system("cls");
 
   // Display the MAIN menu
-  printf("\n\t\tSIMPLE RESTAURANT FKU\n");
+  printf("\n\t\tSIMPLE RESTAURANT SYSTEM\n");
   char menu[5][100] = {
       "Manage Order",
       "Buy Order",
@@ -63,6 +63,9 @@ void displayMainMenu(Order (*arrayOrders)[],
     printTime();
     printSlash();
     exit(0);
+
+  case '5':
+
   default:
     // if its invalid input, display the error and return to Main
     puts("Error, invalid input. try again");
