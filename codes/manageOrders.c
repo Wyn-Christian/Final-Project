@@ -279,7 +279,7 @@ void displayOrder(Order (*arrayOrders)[], int total)
   system("cls");
   char name[100];
   if (!total)
-    printf("\nSorry, there's no available flight right now...");
+    printf("\nSorry, there's no available orders right now...");
   else
   {
     // Display the header
