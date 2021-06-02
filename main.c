@@ -27,7 +27,7 @@
 #include "codes/manageOrders.c"   // 1.] Manage orders
 #include "codes/buyOrders.c"      // 2.] Buy Orders
 #include "codes/displayReceipt.c" // 3.] Display Receipt
-#include "codes/mainMenu.c"       // The MAIN menu
+#include "sample/mainMenu.c"      // The MAIN menu
 
 int main(void)
 {
@@ -47,8 +47,8 @@ int main(void)
              &totalOrders);
 
   // Start the main program
-  displayMainMenu(&allOrders, &orderReceipts,
-                  &numOrders, &totalOrders);
+  mainMenu(&allOrders, &orderReceipts,
+           &numOrders, &totalOrders);
 
   return 0;
 } // main Function
