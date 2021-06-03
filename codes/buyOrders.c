@@ -180,6 +180,7 @@ void initializeCurrentReceipt(Receipt (*destination)[],
     (*destination)[i].quantity = 0;
   }
 }
+
 int generateRandom(void)
 {
   srand(time(NULL));
@@ -205,7 +206,7 @@ void createReceiptFile(Receipt (*currentReceipt)[], int *total, char *code)
   {
     if ((*currentReceipt)[i].quantity)
     {
-      fprintf(file, "%-18s %-10.f %-12d %-10.f\n\n",
+      fprintf(file, "%-18s %-10.f %-12d %-10.f\n",
               (*currentReceipt)[i].name, (*currentReceipt)[i].price,
               (*currentReceipt)[i].quantity, (*currentReceipt)[i].amount);
     }

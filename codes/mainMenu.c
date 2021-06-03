@@ -1,11 +1,4 @@
-/* 
-  The `displayMainMenu` function display the main menu
-  while it tracks the modifications of the datas
-  throughout the program, those datas are the following:
-    * arrayOrders
-    * arrayReceipts
-    * currentNumOrders
- */
+
 void adminMenu(Order (*arrayOrders)[], int *currentNumOrder)
 {
   char username[50] = {"admin"};
@@ -14,7 +7,8 @@ void adminMenu(Order (*arrayOrders)[], int *currentNumOrder)
   char choice2[50];
   char answer;
   int j = 4;
-  int count = 0, limit = 4, result = 1, isWrong = 0;
+  int count = 0, limit = 4,
+      result = 1, isWrong = 0;
   // Loop while username and password is not satisfied
   do
   {
