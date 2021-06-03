@@ -27,7 +27,7 @@
 #include "codes/manageOrders.c"   // 1.] Manage orders
 #include "codes/buyOrders.c"      // 2.] Buy Orders
 #include "codes/displayReceipt.c" // 3.] Display Receipt
-#include "sample/mainMenu.c"      // The MAIN menu
+#include "codes/mainMenu.c"       // The MAIN menu
 
 int main(void)
 {

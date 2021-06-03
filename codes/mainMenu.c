@@ -13,18 +13,54 @@ void adminMenu(Order (*arrayOrders)[], int *currentNumOrder)
   char choice1[50];
   char choice2[50];
   char answer;
-
+  int j = 4;
+  int count = 0, limit = 4, result = 1, isWrong = 0;
   // Loop while username and password is not satisfied
   do
   {
     system("cls");
-    printf("\n\n\t\tEnter username: ");
-    scanf("%s", &choice1);
-    printf("\n\n\t\tEnter password: ");
-    scanf("%s", &choice2);
-  } while ((!strcmp(username, choice1) && !strcmp(password, choice2)) == 0);
+    if (isWrong)
+    {
+      int tries = limit - count;
+      printf("\n\t\tYou have only %d %s left", tries,
+             (tries == 1) ? "try" : "tries");
+      printf("\n\t\tPlease try again");
+    }
+    do
+    {
+      if (!result)
+      {
+        FLUSH;
+        printf("\n\tPlease Enter Valid Input");
+      }
+      printf("\n\n\t\tEnter username: ");
+      result = scanf("%s", &choice1);
+    } while (!result);
 
-  manageOrders(arrayOrders, currentNumOrder);
+    result = 1;
+    do
+    {
+      if (!result)
+      {
+        FLUSH;
+        printf("\n\tPlease Enter Valid Input");
+      }
+      printf("\n\n\t\tEnter password: ");
+      result = scanf("%s", &choice2);
+    } while (!result);
+
+    if ((!strcmp(username, choice1) && !strcmp(password, choice2)) == 1)
+    {
+      manageOrders(arrayOrders, currentNumOrder);
+      return;
+    }
+    else
+    {
+      count++;
+      isWrong = 1;
+    }
+  } while (count != limit);
+
   return;
 }
 
